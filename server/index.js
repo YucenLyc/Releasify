@@ -1,13 +1,3 @@
-// const PORT = process.env.PORT || 3001;
-// const ENV = require("./environment");
-
-// const app = require("./application")(ENV);
-// const server = require("http").Server(app);
-
-// server.listen(PORT, () => {
-//   console.log(`Listening on port ${PORT} in ${ENV} mode.`);
-// });
-
 const express = require("express");
 const app = express();
 const pool = require("./db");

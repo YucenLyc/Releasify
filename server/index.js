@@ -18,6 +18,18 @@ app.get("/users", async(req, res)=> {
   }
   
 });
+// get a user 
+app.get("/users/:id", async(req, res)=> {
+  const { id } = req.params;
+  try{
+    const user = await pool.query("SELECT name, email FROM users WHERE users.id = $1", [id]);
+
+    res.json(user.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+  }
+  
+});
 
 // get all artists
 
@@ -32,27 +44,63 @@ app.get("/artists", async(req, res)=> {
   
 });
 
+// get a artist 
+
+
+app.get("/artists/:id", async(req, res)=> {
+  const { id } = req.params;
+  try{
+    const artist = await pool.query("SELECT * FROM artists WHERE artists.id = $1", [id]);
+
+    res.json(artist.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+  }
+  
+});
 
 
 // create users
 
 app.post("/users", async(req, res) => {
   try {
-    const {
-      name, 
-      email,
-      password
-    } = req.body;
-
-    const newUser = await pool.query("INSERT INTO users (name, email,password) VALUES ($1, $2, $3) RETURNING *", 
+    const { name, email, password } = req.body;
+    const newUser = await pool.query(
+      "INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *", 
     [name, email, password]
     );
     res.json(newUser.rows[0]);
+  } catch (err) {
+    console.error(err.message)
+  }
+})
+
+// update users 
+
+app.put("/users/:id", async (req, res)=> {
+  try{
+    const { id } = req.params; 
+    const { email } = req.body; //SET 
+
+    const updateUserInfo = await pool.query("UPDATE users SET email = $1 WHERE users.id = $2", [email, id]);
+    
+    res.json("user email was updated!");
   } catch (err){
     console.error(err.message);
   }
 })
 
+// delete a user: 
+
+app.delete("/users/:id", async(req, res) => {
+  try {
+    const { id } = req.params;
+    const deleteUser = await pool.query("DELETE FROM users WHERE users.id = $1", [id]);
+    res.json("user was successfully deleted!")
+  } catch (err) {
+    console.error(err.message);
+  }
+});
 
 
 

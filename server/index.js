@@ -6,7 +6,7 @@ app.use(express.json()) //req.body
 
 // ROUTES // 
 
-// get all users
+// get all users:
 
 app.get("/users", async(req, res)=> {
   try{
@@ -18,7 +18,7 @@ app.get("/users", async(req, res)=> {
   }
   
 });
-// get a user 
+// get a user's name & email:
 app.get("/users/:id", async(req, res)=> {
   const { id } = req.params;
   try{
@@ -27,8 +27,7 @@ app.get("/users/:id", async(req, res)=> {
     res.json(user.rows[0]);
   } catch (err) {
     console.error(err.message);
-  }
-  
+  };
 });
 
 // get all artists
@@ -40,12 +39,10 @@ app.get("/artists", async(req, res)=> {
     res.json(allArtists.rows);
   } catch (err) {
     console.error(err.message);
-  }
-  
+  };
 });
 
-// get a artist 
-
+// get the name of an artist:
 
 app.get("/artists/:id", async(req, res)=> {
   const { id } = req.params;
@@ -56,11 +53,10 @@ app.get("/artists/:id", async(req, res)=> {
   } catch (err) {
     console.error(err.message);
   }
-  
 });
 
 
-// create users
+// create a user:
 
 app.post("/users", async(req, res) => {
   try {
@@ -72,10 +68,10 @@ app.post("/users", async(req, res) => {
     res.json(newUser.rows[0]);
   } catch (err) {
     console.error(err.message)
-  }
-})
+  };
+});
 
-// update users 
+// update an user email:
 
 app.put("/users/:id", async (req, res)=> {
   try{
@@ -87,8 +83,8 @@ app.put("/users/:id", async (req, res)=> {
     res.json("user email was updated!");
   } catch (err){
     console.error(err.message);
-  }
-})
+  };
+});
 
 // delete a user: 
 

@@ -1,11 +1,31 @@
 const express = require("express");
 const app = express();
 const pool = require("./db");
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken');
 
 app.use(express.json()) //req.body
 
 // ROUTES // 
 
+// Authenticaltion:
+app.post("/login", async(req,res) =>{
+  console.log({email: req.body.email});
+  console.log({password: req.body.password});
+  try{
+    const user = await pool.query('SELECT * FROM users WHERE users.email = $1 and users.password = $2', [req.body.email, req.body.password]);
+    console.log(user.rows[0]);
+
+    if (user.rows[0]) {
+      console.log("found")
+    } else {
+      console.log("not found")
+    }
+
+  } catch (err) {
+    console.log(err);
+  }
+})
 // get all users:
 
 app.get("/users", async(req, res)=> {
@@ -18,7 +38,9 @@ app.get("/users", async(req, res)=> {
   }
   
 });
+
 // get a user's name & email:
+
 app.get("/users/:id", async(req, res)=> {
   const { id } = req.params;
   try{
@@ -55,6 +77,9 @@ app.get("/artists/:id", async(req, res)=> {
   }
 });
 
+// get all the releases of artists an user follows:
+
+app.get("/releases/")
 
 // create a user:
 

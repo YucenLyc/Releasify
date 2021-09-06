@@ -5,7 +5,6 @@ DROP TABLE IF EXISTS releases CASCADE;
 DROP TABLE IF EXISTS release_types CASCADE;
 DROP TABLE IF EXISTS notifications CASCADE;
 
-
 CREATE TABLE users (
   id SERIAL PRIMARY KEY NOT NULL,
   name VARCHAR(255) NOT NULL,
@@ -31,8 +30,10 @@ CREATE TABLE release_types (
 
 CREATE TABLE releases (
    id SERIAL PRIMARY KEY NOT NULL,
+   name VARCHAR(255) NOT NULL,
    artist_id INTEGER REFERENCES artists(id) ON DELETE CASCADE,
-   release_type_id INTEGER REFERENCES release_types(id)ON DELETE CASCADE
+   release_type_id INTEGER REFERENCES release_types(id)ON DELETE CASCADE,
+   date DATE
 );
 
 

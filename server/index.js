@@ -59,7 +59,8 @@ app.post("/login", async (req, res) => {
 	//console.log({ email: req.body.email });
 	// console.log({ password: req.body.password });
 	try {
-		const user = await pool.query('SELECT * FROM users WHERE users.email = $1 and users.password = $2', [req.body.email, req.body.password]);
+		const user = await pool.query
+    ('SELECT * FROM users WHERE users.email = $1 and users.password = $2', [req.body.email, req.body.password]);
 		//console.log(user.rows[0]);
 
 		if (user.rows[0]) {

@@ -145,28 +145,11 @@ app.get("/users/releases", authenticateToken, async(req, res) => {
 // 	};
 // });
 
-// get the name of an artist:
 
-app.get("/artists/:id", authenticateToken, async (req, res) => {
-	const {
-		id
-	} = req.params;
-	try {
-		const artist = await pool.query("SELECT * FROM artists WHERE artists.id = $1", [id]);
-
-		res.json(artist.rows[0]);
-	} catch (err) {
-		console.error(err.message);
-	}
-});
-
-// get all the releases of artists an user follows:
-
-app.get("/releases/")
 
 // create a user:
 
-app.post("/users", authenticateToken, async (req, res) => {
+app.post("/users", async (req, res) => {
 	try {
 		const {
 			name,
@@ -185,14 +168,15 @@ app.post("/users", authenticateToken, async (req, res) => {
 
 // update an user email:
 
-app.put("/users/:id", authenticateToken, async (req, res) => {
+app.put("/users", authenticateToken, async (req, res) => {
+	let token = req.headers['authorization'].split(" ")[1];
+	let decoded_token = jwt.decode(token);
+	let id = decoded_token["id"];
+
 	try {
 		const {
-			id
-		} = req.params;
-		const {
 			email
-		} = req.body; //SET 
+		} = req.body; 
 
 		const updateUserInfo = await pool.query("UPDATE users SET email = $1 WHERE users.id = $2", [email, id]);
 

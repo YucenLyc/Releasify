@@ -3,7 +3,6 @@ require('dotenv').config()
 const express = require("express");
 const app = express();
 const pool = require("./db");
-const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 
 
@@ -116,6 +115,22 @@ app.get("/users", authenticateToken, async (req, res) => {
 		console.error(err.message);
 	};
 
+});
+
+// get all the names of releases of artists an user follows:
+
+app.get("/users/releases", authenticateToken, async(req, res) => {
+	let token = req.headers['authorization'].split(" ")[1];
+	let decoded_token = jwt.decode(token);
+	let id = decoded_token["id"];
+
+	try {
+		const release = await pool.query("SELECT name FROM releases JOIN user_artist ON user_artist.artist_id = releases.artist_id WHERE user_id = $1", [id]);
+
+		res.json(release.rows);
+	} catch (err) {
+		console.error(err.message);
+	}
 });
 
 // get all artists

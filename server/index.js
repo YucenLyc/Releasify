@@ -87,18 +87,6 @@ app.post("/login", async (req, res) => {
 		console.log(err);
 	}
 });
-// get all users:
-
-// app.get("/users", async (req, res) => {
-//   try {
-//     const allUsers = await pool.query("SELECT * FROM users");
-
-//     res.json(allUsers.rows);
-//   } catch (err) {
-//     console.error(err.message);
-//   }
-
-// });
 
 // get a user's name & email:
 
@@ -119,7 +107,7 @@ app.get("/users", authenticateToken, async (req, res) => {
 
 // get all the names of releases of artists an user follows:
 
-app.get("/users/releases", authenticateToken, async(req, res) => {
+app.get("/user/releases", authenticateToken, async(req, res) => {
 	let token = req.headers['authorization'].split(" ")[1];
 	let decoded_token = jwt.decode(token);
 	let id = decoded_token["id"];
@@ -133,23 +121,26 @@ app.get("/users/releases", authenticateToken, async(req, res) => {
 	}
 });
 
-// get all artists
+// get all artists an user follows: 
 
-// app.get("/artists", authenticateToken, async (req, res) => {
-// 	try {
-// 		const allArtists = await pool.query("SELECT * FROM artists");
+app.get("/user/artists", authenticateToken, async(req, res) => {
+	let token = req.headers['authorization'].split(" ")[1];
+	let decoded_token = jwt.decode(token);
+	let id = decoded_token["id"];
 
-// 		res.json(allArtists.rows);
-// 	} catch (err) {
-// 		console.error(err.message);
-// 	};
-// });
+	try {
+		const artist = await pool.query("SELECT name FROM artists JOIN user_artist ON user_artist.artist_id = artists.id WHERE user_id = $1", [id]);
 
-
+		res.json(artist.rows);
+		
+	} catch (err) {
+		console.log(err.message);
+	}
+})
 
 // create a user:
 
-app.post("/users", async (req, res) => {
+app.post("/signup", async (req, res) => {
 	try {
 		const {
 			name,

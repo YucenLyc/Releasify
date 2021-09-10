@@ -55,10 +55,10 @@ app.delete('/logout', (req, res) => {
 
 
 app.post("/login", async (req, res) => {
-	
+
 	try {
-		const user = await pool.query
-    ('SELECT * FROM users WHERE users.email = $1 and users.password = $2', [req.body.email, req.body.password]);
+		const user = await pool.query(
+			"SELECT * FROM users WHERE users.email = $1 and users.password = $2", [req.body.email, req.body.password]);
 
 		if (user.rows[0]) {
 			console.log("found");
@@ -94,7 +94,8 @@ app.get("/users", authenticateToken, async (req, res) => {
 	let id = decoded_token["id"];
 
 	try {
-		const user = await pool.query("SELECT name, email FROM users WHERE users.id = $1", [id]);
+		const user = await pool.query(
+			"SELECT name, email FROM users WHERE users.id = $1", [id]);
 
 		res.json(user.rows[0]);
 	} catch (err) {
@@ -105,13 +106,14 @@ app.get("/users", authenticateToken, async (req, res) => {
 
 // get all the names of releases of artists an user follows:
 
-app.get("/user/releases", authenticateToken, async(req, res) => {
+app.get("/user/releases", authenticateToken, async (req, res) => {
 	let token = req.headers['authorization'].split(" ")[1];
 	let decoded_token = jwt.decode(token);
 	let id = decoded_token["id"];
 
 	try {
-		const release = await pool.query("SELECT name FROM releases JOIN user_artist ON user_artist.artist_id = releases.artist_id WHERE user_id = $1", [id]);
+		const release = await pool.query(
+			"SELECT name FROM releases JOIN user_artist ON user_artist.artist_id = releases.artist_id WHERE user_id = $1", [id]);
 
 		res.json(release.rows);
 	} catch (err) {
@@ -121,16 +123,17 @@ app.get("/user/releases", authenticateToken, async(req, res) => {
 
 // get all artists an user follows: 
 
-app.get("/user/artists", authenticateToken, async(req, res) => {
+app.get("/user/artists", authenticateToken, async (req, res) => {
 	let token = req.headers['authorization'].split(" ")[1];
 	let decoded_token = jwt.decode(token);
 	let id = decoded_token["id"];
 
 	try {
-		const artist = await pool.query("SELECT name FROM artists JOIN user_artist ON user_artist.artist_id = artists.id WHERE user_id = $1", [id]);
+		const artist = await pool.query(
+			"SELECT name FROM artists JOIN user_artist ON user_artist.artist_id = artists.id WHERE user_id = $1", [id]);
 
 		res.json(artist.rows);
-		
+
 	} catch (err) {
 		console.error(err.message);
 	}
@@ -138,19 +141,38 @@ app.get("/user/artists", authenticateToken, async(req, res) => {
 
 // get the releases from a user's followed list by date:
 
-app.get("/user/releases/date", authenticateToken, async(req, res)=>{
+app.get("/user/releases/date", authenticateToken, async (req, res) => {
 	let token = req.headers['authorization'].split(" ")[1];
 	let decoded_token = jwt.decode(token);
 	let id = decoded_token["id"];
 
 	try {
-		const releaseByDate = await pool.query("SELECT name FROM releases JOIN user_artist ON user_artist.artist_id = releases.artist_id WHERE user_id = $1 AND date between '2017-01-01' and '2021-09-12';", [id]);
+		const releaseByDate = await pool.query(
+			"SELECT name FROM releases JOIN user_artist ON user_artist.artist_id = releases.artist_id WHERE user_id = $1 AND date between '2017-01-01' and '2021-09-12';", [id]);
 
 		res.json(releaseByDate.rows);
 	} catch (err) {
 		console.error(err.message);
 	}
 });
+
+// get all the releases of one artist: 
+//this will be displayed on the artist homepage:
+
+app.get("/artist:id/releases", async (req, res) => {
+	
+	try {
+		const {id} = req.body;
+
+		const artistReleases = await pool.query(
+			"SELECT name, release_type_id, date FROM releases WHERE artist_id = $1", [id]
+		);
+		res.json(artistReleases.rows);
+	} catch (err) {
+		console.error(err.message);
+	};
+});
+
 
 // create a user:
 
@@ -181,7 +203,7 @@ app.put("/users", authenticateToken, async (req, res) => {
 	try {
 		const {
 			email
-		} = req.body; 
+		} = req.body;
 
 		const updateUserInfo = await pool.query("UPDATE users SET email = $1 WHERE users.id = $2", [email, id]);
 

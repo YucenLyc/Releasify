@@ -104,6 +104,19 @@ app.get("/users", authenticateToken, async (req, res) => {
 
 });
 
+// get all the recent releases in date-descending order/ to be displayed on the homepage: 
+
+app.get("/releases", async (req, res) => {
+	try {
+		const allReleases = await pool.query(
+			"SELECT * FROM releases ORDER BY date DESC;"
+		);
+		res.json(allReleases.rows);
+	} catch (err) {
+		console.error(err.message);
+	}
+})
+
 // get all the names of releases of artists an user follows:
 
 app.get("/user/releases", authenticateToken, async (req, res) => {
@@ -160,9 +173,9 @@ app.get("/user/releases/date", authenticateToken, async (req, res) => {
 //this will be displayed on the artist homepage:
 
 app.get("/artist:id/releases", async (req, res) => {
-	
+
 	try {
-		const {id} = req.body;
+		const { id } = req.body;
 
 		const artistReleases = await pool.query(
 			"SELECT name, release_type_id, date FROM releases WHERE artist_id = $1", [id]

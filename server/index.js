@@ -55,12 +55,10 @@ app.delete('/logout', (req, res) => {
 
 
 app.post("/login", async (req, res) => {
-	//console.log({ email: req.body.email });
-	// console.log({ password: req.body.password });
+	
 	try {
 		const user = await pool.query
     ('SELECT * FROM users WHERE users.email = $1 and users.password = $2', [req.body.email, req.body.password]);
-		//console.log(user.rows[0]);
 
 		if (user.rows[0]) {
 			console.log("found");
@@ -134,9 +132,25 @@ app.get("/user/artists", authenticateToken, async(req, res) => {
 		res.json(artist.rows);
 		
 	} catch (err) {
-		console.log(err.message);
+		console.error(err.message);
 	}
-})
+});
+
+// get the releases from a user's followed list by date:
+
+app.get("/user/releases/date", authenticateToken, async(req, res)=>{
+	let token = req.headers['authorization'].split(" ")[1];
+	let decoded_token = jwt.decode(token);
+	let id = decoded_token["id"];
+
+	try {
+		const releaseByDate = await pool.query("SELECT name FROM releases JOIN user_artist ON user_artist.artist_id = releases.artist_id WHERE user_id = $1 AND date between '2017-01-01' and '2021-09-12';", [id]);
+
+		res.json(releaseByDate.rows);
+	} catch (err) {
+		console.error(err.message);
+	}
+});
 
 // create a user:
 

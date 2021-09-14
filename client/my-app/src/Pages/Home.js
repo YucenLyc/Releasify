@@ -3,7 +3,7 @@ import React from 'react';
 function Home() {
   return (
     <div>
-      Welcome to Releasify Home Page!
+      Welcome to RELEASIFY Home Page!
     </div>
   );
 }

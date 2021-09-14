@@ -4,9 +4,10 @@ const express = require("express");
 const app = express();
 const pool = require("./db");
 const jwt = require('jsonwebtoken');
-
+const cors = require("cors")
 
 app.use(express.json()) //req.body
+app.use(cors());
 
 let refreshTokens = []
 
@@ -53,6 +54,24 @@ app.delete('/logout', (req, res) => {
 	res.sendStatus(204)
 })
 
+// create a user:
+
+app.post("/signup", async (req, res) => {
+	try {
+		const {
+			name,
+			email,
+			password
+		} = req.body;
+		const newUser = await pool.query(
+			"INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *",
+			[name, email, password]
+		);
+		res.json(newUser.rows[0]);
+	} catch (err) {
+		console.error(err.message)
+	};
+});
 
 app.post("/login", async (req, res) => {
 
@@ -76,6 +95,7 @@ app.post("/login", async (req, res) => {
 				accessToken: accessToken,
 				refreshToken: refreshToken
 			});
+			
 
 		} else {
 			console.log("not found")
@@ -187,25 +207,6 @@ app.get("/artist:id/releases", async (req, res) => {
 });
 
 
-// create a user:
-
-app.post("/signup", async (req, res) => {
-	try {
-		const {
-			name,
-			email,
-			password
-		} = req.body;
-		const newUser = await pool.query(
-			"INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *",
-			[name, email, password]
-		);
-		res.json(newUser.rows[0]);
-	} catch (err) {
-		console.error(err.message)
-	};
-});
-
 // update an user email:
 
 app.put("/users", authenticateToken, async (req, res) => {
@@ -239,12 +240,6 @@ app.delete("/users/:id", async (req, res) => {
 		console.error(err.message);
 	}
 });
-
-
-
-
-
-
 
 
 

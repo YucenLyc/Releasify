@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, NavLink } from 'react-router-dom';
-
-import Login from './Pages/Login/login';
-import Dashboard from './Pages/Dashboard/dashboard';
-import Home from './Pages/Home/home';
-
+ 
+import AuthService from './Pages/Login';
+import Dashboard from './Pages/Dashboard';
+import Home from './Pages/Home';
+ 
 function App() {
   return (
     <div className="App">
@@ -18,7 +18,7 @@ function App() {
           <div className="content">
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route path="/login" component={Login} />
+              <Route path="/login" component={AuthService} />
               <Route path="/dashboard" component={Dashboard} />
             </Switch>
           </div>
@@ -27,5 +27,5 @@ function App() {
     </div>
   );
 }
-
+ 
 export default App;

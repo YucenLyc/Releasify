@@ -4,7 +4,9 @@ const express = require("express");
 const app = express();
 const pool = require("./db");
 const jwt = require('jsonwebtoken');
-const cors = require("cors")
+const cors = require("cors");
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 app.use(express.json()) //req.body
 app.use(cors());
@@ -56,18 +58,26 @@ app.delete('/logout', (req, res) => {
 
 // create a user:
 
-app.post("/signup", async (req, res) => {
+app.post("/register", async (req, res) => {
 	try {
 		const {
 			name,
 			email,
 			password
 		} = req.body;
-		const newUser = await pool.query(
+
+		bcrypt.hash(password, saltRounds, (err, hash) => {
+			if (err) {
+				console.log(err);
+			}
+		
+		const newUser = pool.query(
 			"INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *",
-			[name, email, password]
+			[name, email, hash]
 		);
-		res.json(newUser.rows[0]);
+
+		console.log("new user created!")
+	});
 	} catch (err) {
 		console.error(err.message)
 	};
@@ -98,7 +108,7 @@ app.post("/login", async (req, res) => {
 			
 
 		} else {
-			console.log("not found")
+			console.log("not found");
 		}
 
 	} catch (err) {
@@ -240,8 +250,6 @@ app.delete("/users/:id", async (req, res) => {
 		console.error(err.message);
 	}
 });
-
-
 
 
 app.listen(3000, () => {

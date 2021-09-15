@@ -5,7 +5,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword]= useState('');
 
-  const login = () =>{
+  const login = () => {
     const data = { email: email, password: password };
     axios
       .post("http://localhost:3000/login", data)
@@ -17,7 +17,7 @@ function Login() {
         console.log("id", response.data.id)
       }
     })  
-  }
+  };
  
   return (
     <div>
@@ -40,4 +40,3 @@ function Login() {
   );
 };
 export default Login;
-

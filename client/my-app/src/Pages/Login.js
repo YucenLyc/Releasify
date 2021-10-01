@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-
 function Login() {
+
+ 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  
   const login = () => {
     axios.post("http://localhost:3000/api/auth/login", {
       email: email,
@@ -13,8 +14,8 @@ function Login() {
     }).then((response) => {
       console.log("user logged in");
     });
-  }
-
+  };
+ 
 
   return (
     <div className="login-wrapper">

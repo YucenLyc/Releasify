@@ -7,7 +7,7 @@ function Registration() {
   const [password, setPassword] = useState("");
 
   const register = () => {
-    axios.post("http://localhost:3000/api/users", {
+    axios.post("http://localhost:3000/api/users/register", {
       name: name,
       email: email,
       password: password,

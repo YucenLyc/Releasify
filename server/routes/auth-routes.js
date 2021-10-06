@@ -23,6 +23,18 @@ router.post('/login', async (req, res) => {
     console.log("success")
   } catch (error) {
     res.status(401).json({error:error.message});
+    res.redirect('login/userInfo')
+  }
+});
+
+router.get('/login/userInfo', async (req, res) => {
+  const {email} = req.body;
+  try{
+    const userInfo = await pool.query('SELECT * FROM users WHERE users.email = $1', [req.body.email])
+    res.json({userInfo: userInfo.rows[0]})
+    console.log(userInfo.rows[0]);
+  } catch (error) {
+    res.status(500).json({error: error.message});
   }
 });
 
@@ -40,6 +52,7 @@ router.get('/refresh_token', (req,res) => {
     res.status(401).json({error: error.message});
   }
 });
+
 
 router.delete('/refresh_token', (req,res) => {
   try {

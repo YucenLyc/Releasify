@@ -16,22 +16,23 @@ router.get('/',authenticateToken, async(req, res) => {
 
 router.post('/register', async (req, res) => {
   try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10); 
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newUser = await pool.query('INSERT INTO users(name, email, password) VALUES ($1, $2, $3) RETURNING *', [req.body.name, req.body.email, hashedPassword]);
+    console.log("New User Created!")
     res.json({users: newUser.rows[0]})
   } catch (error) {
     res.status(500).json({error: error.message});
   }
 });
 
-router.post('/userInfo', async (req, res) => {
-  try{
-    const userInfo = await pool.query('SELECT * FROM users WHERE users.email = $1', [req.body.email])
-    res.json({userInfo: userInfo.rows[0]})
-    console.log(userInfo.rows[0]);
-  } catch (error) {
-    res.status(500).json({error: error.message});
-  }
-})
+// router.post('/userInfo', async (req, res) => {
+//   try{
+//     const userInfo = await pool.query('SELECT * FROM users WHERE users.email = $1', [req.body.email])
+//     res.json({userInfo: userInfo.rows[0]})
+//     console.log(userInfo.rows[0]);
+//   } catch (error) {
+//     res.status(500).json({error: error.message});
+//   }
+// })
 
 export default router;

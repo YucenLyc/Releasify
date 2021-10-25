@@ -1,33 +1,28 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import "../Styles/Login.css"
-//import { loginUrl } from './spotify'
+import {Redirect} from "react-router-dom";
 
-function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("")
+export default function Login() {
+  const [email, setEmail] = useState([]);
+  const [password, setPassword] = useState([]);
+  const [redirect, setRedirect] = useState(false);
   
+
   const login = () => {
     axios.post("http://localhost:3000/api/auth/login", {
-      email: email,
+      email: email, 
       password: password,
     }).then((response) => {
-      // printing the access token from the backend
       console.log(response.data.accessToken);
     })
-  };
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
+    setRedirect(true);
+  }
 
-  // const login = () => {
-  //   axios.post("http://localhost:3000/api/auth/login", {
-  //     email: email,
-  //     password: password,
-  //   }).then((response) => {
-  //     console.log("user logged in");
-  //   })
 
-  // };
+  if (redirect) {
+    return<Redirect to="/login/userInfo" />
+  }
 
   return (
     <div className="login">
@@ -56,4 +51,4 @@ function Login() {
   )
 }
 
-export default Login;
+

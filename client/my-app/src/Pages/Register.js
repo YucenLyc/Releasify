@@ -22,7 +22,7 @@ function Registration() {
         console.log(response);
       });
     } else {
-      console.log("passwords do not match")
+      console.log("mismatched passwords")
     }
   }
 
@@ -39,6 +39,7 @@ function Registration() {
     <div className="App">
       <div className="registration">
         <form>
+        <div className="error-msg">{isError}</div>
           <label>Username</label>
           <input
             type="text"
@@ -72,7 +73,6 @@ function Registration() {
             placeholder="Confirm Password"
             onChange={(event) => checkValidation(event)}
           />
-          {isError}
           <button onClick={register}>Register</button>
         </form>
       </div>

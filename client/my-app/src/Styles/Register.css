@@ -1,0 +1,49 @@
+.registration{
+  font-family: 'Open Sans', sans-serif;
+  background-color: #fce4ec;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+form{
+  width: 450px;
+  background: #fff;
+  box-shadow: 0 5px 21px #d4d4d4;
+  padding: 40px;
+  border: radius 8px;
+}
+label{
+  position: relative;
+  display: block;
+  margin: bottom 25px;
+}
+input{
+  width: 90%;
+  height: 50px;
+  padding:0 20px;
+  font-size: 18px;
+  border-radius: 50px;
+  border: 0;
+  background-color: #e8eddf;
+}
+button{
+  display: inline-block;
+  width: 180px;
+  height:50px;
+  line-height: 50px;
+  background: linear-gradient(to left, #cad2c5, #84a98c);
+  box-shadow: 0 10px 25px;
+  border-radius:50px;
+  border: none;
+  font: size 18px;
+  font-weight: 500;
+  color: #fff;
+  text-transform:uppercase;
+  letter-spacing: 1px;
+}
+.error-msg{
+  position: absolute;
+  margin-left: 85px;
+  color: red
+}

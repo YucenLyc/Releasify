@@ -10,8 +10,6 @@ function Registration() {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
-
-
   const register = () => {
     if (password === passwordConfirmation) {
       axios.post("http://localhost:3000/api/users/register", {

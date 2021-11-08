@@ -5,7 +5,6 @@ import "../Styles/Login.css";
 
 export default function userInfo(props) {
 
-
   const userInfo = () => {
     axios.get("http://localhost:3000/api/auth/login/userInfo" , {
     }).then((response) => {

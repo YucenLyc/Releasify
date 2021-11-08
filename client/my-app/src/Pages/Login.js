@@ -16,12 +16,12 @@ export default function Login() {
     }).then((response) => {
       console.log(response.data.accessToken);
     })
-    setRedirect(true);
+    setRedirect(true); 
   }
 
 
   if (redirect) {
-    return<Redirect to="/login/userInfo" />
+    return<Redirect to="userInfo" />
   }
 
   return (

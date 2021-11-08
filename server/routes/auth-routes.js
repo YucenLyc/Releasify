@@ -21,22 +21,25 @@ router.post('/login', async (req, res) => {
     res.json(tokens);
     
     console.log("success")
+    
   } catch (error) {
     res.status(401).json({error:error.message});
-    res.redirect('login/userInfo')
   }
 });
 
 router.get('/login/userInfo', async (req, res) => {
-  const {email} = req.body;
-  try{
-    const userInfo = await pool.query('SELECT * FROM users WHERE users.email = $1', [req.body.email])
-    res.json({userInfo: userInfo.rows[0]})
-    console.log(userInfo.rows[0]);
+// need to make sure only the logged in user gets the personal information on this page:
+
+  try {
+    const userInfo = await pool.query('SELECT * FROM users')
+    res.json({userInfo: userInfo.rows})
+    console.log("here are all the user information")
+    console.log(userInfo.rows);
   } catch (error) {
-    res.status(500).json({error: error.message});
+    res.status(500).json({error: error.message})
   }
 });
+
 
 router.get('/refresh_token', (req,res) => {
   try {
@@ -53,14 +56,13 @@ router.get('/refresh_token', (req,res) => {
   }
 });
 
-
 router.delete('/refresh_token', (req,res) => {
   try {
     res.clearCookie('refresh_token');
     return res.status(200).json({message:'refresh token deleted.'})
   } catch (error){
     res.status(401).json({error: error.message});
-  } 
+  }
 });
 
 export default router;

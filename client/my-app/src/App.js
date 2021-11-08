@@ -4,7 +4,7 @@ import Dashboard from './Pages/Dashboard';
 import Home from './Pages/Home';
 import Registration from './Pages/Register';
 import Login from './Pages/Login';
-
+import userInfo from './Pages/UserInfo'
 
  
 function App() {
@@ -22,9 +22,11 @@ function App() {
           <div className="content">
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Registration} />
-              <Route path="/dashboard" component={Dashboard} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/register" component={Registration} />
+              <Route exact path="/dashboard" component={Dashboard} />
+              <Route exact path="/userInfo" component={userInfo} />
+              
             </Switch>
           </div>
         </div>

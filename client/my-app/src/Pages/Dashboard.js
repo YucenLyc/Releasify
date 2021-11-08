@@ -1,5 +1,7 @@
 import React from 'react';
- 
+import Login from './Login';
+
+
 function Dashboard(props) {
  
   // handle click event of logout button

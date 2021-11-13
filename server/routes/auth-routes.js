@@ -28,7 +28,7 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/login/userInfo', async (req, res) => {
-// need to make sure only the logged in user gets the personal information on this page:
+//TODO: need to make sure only the logged in user gets the personal information on this page:
 
   try {
     const userInfo = await pool.query('SELECT * FROM users')

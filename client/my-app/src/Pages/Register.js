@@ -11,7 +11,8 @@ function Registration() {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
-  const baseURL = process.env.REACT_APP_API_BASE_URL
+  const baseURL = process.env.REACT_APP_API_BASE_URL;
+  console.log(baseURL);
   const register = () => {
     if (password === passwordConfirmation) {
       axios.post( baseURL +"/api/users/register", {

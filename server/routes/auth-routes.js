@@ -20,7 +20,7 @@ router.post('/login', async (req, res) => {
     res.cookie('refresh_token', tokens.refreshToken, {...(process.env.COOKIE_DOMAIN && {domain: process.env.COOKIE_DOMAIN}) , httpOnly: true,sameSite: 'none', secure: true});
     res.json(tokens);
     
-    console.log("success")
+    console.log('You are successfully logged in')
     
   } catch (error) {
     res.status(401).json({error:error.message});
@@ -28,7 +28,7 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/login/userInfo', async (req, res) => {
-// need to make sure only the logged in user gets the personal information on this page:
+//TODO: need to make sure only the logged in user gets the personal information on this page:
 
   try {
     const userInfo = await pool.query('SELECT * FROM users')

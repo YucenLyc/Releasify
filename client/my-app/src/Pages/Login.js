@@ -3,19 +3,22 @@ import axios from 'axios';
 import "../Styles/Login.css"
 import {Redirect} from "react-router-dom";
 
+require('dotenv').config();
+
 export default function Login() {
   const [email, setEmail] = useState([]);
   const [password, setPassword] = useState([]);
   const [redirect, setRedirect] = useState(false);
   
-
+  const baseURL = process.env.REACT_APP_API_BASE_URL
   const login = () => {
-    axios.post("http://localhost:3000/api/auth/login", {
+    axios.post( baseURL + "/api/auth/login", {
       email: email, 
       password: password,
     }).then((response) => {
       console.log(response.data.accessToken);
     })
+    console.log("logged in, now redirect me")
     setRedirect(true); 
   }
 

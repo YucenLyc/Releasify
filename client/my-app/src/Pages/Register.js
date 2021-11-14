@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import axios from "axios";
 
 import "../Styles/Register.css"
+require('dotenv').config();
 
 function Registration() {
   const [isError, setIsError] = useState("");
@@ -10,9 +11,11 @@ function Registration() {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
+  const baseURL = process.env.REACT_APP_API_BASE_URL;
+  console.log(baseURL);
   const register = () => {
     if (password === passwordConfirmation) {
-      axios.post("http://localhost:3000/api/users/register", {
+      axios.post( baseURL +"/api/users/register", {
         name: name,
         email: email,
         password: password,

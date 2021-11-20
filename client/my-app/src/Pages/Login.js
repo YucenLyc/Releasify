@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import "../Styles/Login.css"
 import {Redirect} from "react-router-dom";
+import auth from './Auth'
+
 
 require('dotenv').config();
 
-export default function Login() {
+export default function Login(props) {
+  //let history = useHistory();
+
   const [email, setEmail] = useState([]);
   const [password, setPassword] = useState([]);
+  const [error, setError] = useState([]);
   const [redirect, setRedirect] = useState(false);
   
   const baseURL = process.env.REACT_APP_API_BASE_URL
@@ -22,9 +28,8 @@ export default function Login() {
     setRedirect(true); 
   }
 
-
   if (redirect) {
-    return<Redirect to="userInfo" />
+    return<Redirect to="profile" />
   }
 
   return (
@@ -49,7 +54,13 @@ export default function Login() {
         />
       </label>
 
-      <button onClick={login}>LOGIN WITH RELEASIFY</button>
+      <button onClick={
+        ()=> {
+          auth.login(() => {
+              props.history.push("/profile")
+          })
+        }
+      }>LOGIN WITH RELEASIFY</button>
     </div>
   )
 }

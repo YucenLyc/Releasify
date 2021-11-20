@@ -18,7 +18,7 @@ export default function userInfo(props) {
         <header>
           <h1>Personal Information</h1>
         </header>
-        <div className="userBody">User Name: {userInfo }</div>
+        <div className="userBody">User Name: { userInfo }</div>
       </div>
     </div>
   )

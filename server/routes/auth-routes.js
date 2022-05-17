@@ -9,9 +9,14 @@ const router = express.Router();
 router.post('/login', async (req, res) => {
   try {
     const {email, password} = req.body;
+
     const users = await pool.query('SELECT * FROM users WHERE users.email = $1', [email]);
+
     if (users.rows.length === 0) return res.status(401).json({error: "email is incorrect"});
+    
     // password check:
+    console.log("password:", password);
+    console.log("users.rows:", users.rows[0].password) 
     const validPassword = await bcrypt.compare(password, users.rows[0].password);
     if (!validPassword) return res.status(401).json({error:"incorrect password"});
 

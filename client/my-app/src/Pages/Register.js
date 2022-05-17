@@ -1,4 +1,4 @@
-import React, { useState, component} from "react"
+import React, { useState, component } from "react"
 import axios from "axios";
 
 import "../Styles/Register.css"
@@ -15,7 +15,7 @@ function Registration() {
   console.log(baseURL);
   const register = () => {
     if (password === passwordConfirmation) {
-      axios.post( baseURL +"/api/users/register", {
+      axios.post(baseURL + "/api/users/register", {
         name: name,
         email: email,
         password: password,
@@ -40,30 +40,33 @@ function Registration() {
     <div className="App">
       <div className="registration">
         <form>
-        <div className="error-msg">{isError}</div>
+          <div className="error-msg">{isError}</div>
           <label>Username</label>
           <input
+            value={name}
             onChange={(event) => {
               setName(event.target.value);
             }}
           />
           <label>Email</label>
           <input
+            value={email}
             onChange={(event) => {
               setEmail(event.target.value);
             }}
           />
           <label>Password</label>
           <input
-            className="password"
+            type="password"
+            value={password}
             onChange={(event) => {
               setPassword(event.target.value);
             }}
           />
           <label>Confirm Password</label>
           <input
+            type="password"
             value={passwordConfirmation}
-            className="confirm-password"
             onChange={(event) => checkValidation(event)}
           />
           <button onClick={register}>Register</button>

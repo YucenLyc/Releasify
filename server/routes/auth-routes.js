@@ -9,7 +9,7 @@ const router = express.Router();
 router.post('/login', async (req, res) => {
   try {
     const {email, password} = req.body;
-
+    console.log("this is the login route, it's hit")
     const users = await pool.query('SELECT * FROM users WHERE users.email = $1', [email]);
 
     if (users.rows.length === 0) return res.status(401).json({error: "email is incorrect"});

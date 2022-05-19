@@ -22,19 +22,20 @@ router.post('/register', async (req, res) => {
     console.log("this is before the if statement")
     if (!req.body.name | !req.body.email | !hashedPassword) {
       console.log("this is inside the if statement")
-      res.json({error:"Invalid User Input"})
+      res.json({ error: "Invalid User Input" })
     }
     console.log("this is after the if statement")
-    res.json({foo: "bar"});
+    res.json({ foo: "bar" });
     const newUser = await pool.query('INSERT INTO users(name, email, password) VALUES ($1, $2, $3) RETURNING *', [req.body.name, req.body.email, hashedPassword]);
     //res.sendStatus(200)
-    console.log(newUser.rows[0] )
+    console.log(newUser.rows[0])
     console.log("New User Created!")
     return res.json({ users: newUser.rows[0] })
   } catch (error) {
     console.log("this is the backend catch error:", error)
     res.status(500).json({ error: error.message });
-  // }
+    // }
+  }
 });
 
 // router.post('/userInfo', async (req, res) => {

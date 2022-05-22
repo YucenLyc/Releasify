@@ -2,8 +2,13 @@ import express from 'express';
 import pool from '../db.js';
 import bcrypt from 'bcrypt';
 import { authenticateToken } from '../middleware/authorization.js';
+import bodyParser from 'body-parser';
 
 const router = express.Router();
+const app = express();
+
+app.use(bodyParser.urlencoded({ extends: true }));
+app.use(bodyParser.json());
 
 router.get('/', authenticateToken, async (req, res) => {
   try {

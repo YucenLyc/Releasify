@@ -10,7 +10,7 @@ const Registration = () => {
   const baseURL = process.env.REACT_APP_API_BASE_URL;
   console.log("this is the base URL:", baseURL);
 
-  const register = () => {
+  const register = (event) => {
     if (password === confirmPassword) {
       console.log(baseURL)
       axios.post( baseURL + '/api/users/register', {
@@ -23,6 +23,12 @@ const Registration = () => {
     } else {
       console.log("mismatched passwords")
     }
+
+    //clear user input after submission:
+    setName("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
   }
 
   return (
@@ -47,6 +53,7 @@ const Registration = () => {
         />
         <label>Password</label>
         <input type="password"
+        value={password}
         placeholder="Password"
         onChange={(event) => {
           setPassword(event.target.value);
@@ -54,12 +61,13 @@ const Registration = () => {
         />
          <label>Confirm Password</label>
         <input type="password"
+        value={confirmPassword}
         placeholder="Confirm Password"
         onChange={(event) => {
           setConfirmPassword(event.target.value);
         }}
         />
-         <button onClick={()=> register()}>Submit</button>
+         <button onClick={() => register()}>Submit</button>
       </div>
     </div>
   )

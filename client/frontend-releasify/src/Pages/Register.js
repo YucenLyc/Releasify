@@ -26,7 +26,7 @@ const Registration = () => {
 
   return (
     <div>
-      <form>
+      <div>
         <h3>Registration</h3>
         <label>Username</label>
         <input type="text"
@@ -58,8 +58,8 @@ const Registration = () => {
           setConfirmPassword(event.target.value);
         }}
         />
-         <button onClick={()=> register}>Submit</button>
-      </form>
+         <button onClick={()=> register()}>Submit</button>
+      </div>
     </div>
   )
 }

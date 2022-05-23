@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const Registration = () => {
   const [name, setName] = useState("");
@@ -6,8 +7,23 @@ const Registration = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const baseURL = process.env.REACT_APP_API_BASE_URL;
-  console.log("this is the base URL:", baseURL);
+  //const baseURL = process.env.REACT_APP_API_BASE_URL;
+  //console.log("this is the base URL:", baseURL);
+
+  const register = () => {
+    if (password === confirmPassword) {
+      axios.post( "http://localhost:5001/api/users/register", {
+        name: name,
+        email: email,
+        password: password,
+      }).then((response) => {
+        console.log(response);
+      });
+    } else {
+      console.log("mismatched passwords")
+    }
+  }
+
   return (
     <div>
       <form>
@@ -42,6 +58,7 @@ const Registration = () => {
           setConfirmPassword(event.target.value);
         }}
         />
+         <button onClick={()=> register}>Submit</button>
       </form>
     </div>
   )

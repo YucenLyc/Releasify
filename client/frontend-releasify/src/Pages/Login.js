@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Redirect } from "react-router-dom";
 import '../Styles/Login.css'
+import { baseURL } from "../Service/BaseURLService"
 
 
 export default function Login() {
@@ -9,7 +10,6 @@ export default function Login() {
   const [password, setPassword] = useState([]);
   const [redirect, setRedirect] = useState(false);
 
-  const baseURL = process.env.REACT_APP_API_BASE_URL
   const login = () => {
     axios.post(baseURL + "/api/auth/login", {
       email: email,

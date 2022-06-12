@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../Styles/Register.css';
+import { baseURL } from "../Service/BaseURLService"
 
 const Registration = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  const baseURL = process.env.REACT_APP_API_BASE_URL;
 
   const register = () => {
     if (password === confirmPassword) {

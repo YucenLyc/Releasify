@@ -13,7 +13,9 @@ VALUES
 ('Spiritbox'),
 ('Amon Amarth'),
 ('Shadow Of Intent'),
-('Trivium');
+('Trivium'),
+('Behemoth'),
+('Arch Enemy');
 
 INSERT INTO user_artist (user_id, artist_id)
 VALUES
@@ -25,7 +27,8 @@ VALUES
 (4, 2), 
 (4, 3),
 (5, 6),
-(10, 6);
+(5, 8),
+(3, 7);
 
 
 INSERT INTO releases (artist_id, name, release_type_id, date)
@@ -35,7 +38,8 @@ VALUES
 (3, 'Blessed Be', 2, '2017-06-06'),
 (4, 'Berserker', 3, '2021-02-13'),
 (5, 'Intensified Genocide', 1, '2021-07-15'),
-(6, 'Shogun', 4, '2021-08-08');
+(6, 'Shogun', 4, '2021-08-08'),
+(7, 'Ov My Herculean Exile', 2, '2022-03-27');
 
 INSERT INTO release_types (type)
 VALUES
@@ -48,7 +52,7 @@ VALUES
 INSERT INTO notifications (user_id, release_id, notified)
 VALUES
 (1, 7, false),
-(2, 8, false),
-(3, 12, false),
-(4, 11, false),
-(5, 10, true);
+(2, 5, false),
+(3, 1, false),
+(4, 2, false),
+(5, 6, true);

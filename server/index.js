@@ -22,6 +22,6 @@ app.use('/', express.static(join(__dirname, 'public')));
 app.use('/api/users', usersRouter);
 app.use('/api/auth', authRouter);
 
-app.listen(3000, () => {
-	console.log("server is listening on port 3000")
+app.listen(5001, () => {
+	console.log("server is listening on port 5001")
 });

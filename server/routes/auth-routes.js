@@ -9,9 +9,15 @@ const router = express.Router();
 router.post('/login', async (req, res) => {
   try {
     const {email, password} = req.body;
+    //keeping the console log for future sanity checks:
+    //console.log("You've hit the login route, now let's validate")
     const users = await pool.query('SELECT * FROM users WHERE users.email = $1', [email]);
+
     if (users.rows.length === 0) return res.status(401).json({error: "email is incorrect"});
+    
     // password check:
+    // console.log("password:", password);
+    // console.log("users.rows:", users.rows[0].password) 
     const validPassword = await bcrypt.compare(password, users.rows[0].password);
     if (!validPassword) return res.status(401).json({error:"incorrect password"});
 
@@ -20,7 +26,7 @@ router.post('/login', async (req, res) => {
     res.cookie('refresh_token', tokens.refreshToken, {...(process.env.COOKIE_DOMAIN && {domain: process.env.COOKIE_DOMAIN}) , httpOnly: true,sameSite: 'none', secure: true});
     res.json(tokens);
     
-    console.log('You are successfully logged in')
+    //console.log('You are successfully logged in')
     
   } catch (error) {
     res.status(401).json({error:error.message});

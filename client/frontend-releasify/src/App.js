@@ -1,14 +1,12 @@
 import './App.css';
-import Login from './Pages/Login'
-import Registration from './Pages/Register'
+import Registration from './Components/Register'
 
 const App = () => {
 
   return(
-    <div>
+    <main>
       <Registration / >
-      <Login />
-    </div>
+    </main>
   )
 }
 export default App;

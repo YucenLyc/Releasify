@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Redirect } from "react-router-dom";
 import '../Styles/Login.css'
 import { baseURL } from "../Service/BaseURLService"
 
@@ -8,26 +7,20 @@ import { baseURL } from "../Service/BaseURLService"
 const Login = () => {
   const [email, setEmail] = useState([]);
   const [password, setPassword] = useState([]);
-  const [redirect, setRedirect] = useState(false);
 
   const login = () => {
     axios.post(baseURL + "/api/auth/login", {
       email: email,
       password: password,
     }).then((response) => {
-      if(response.data.accessToken) {
+      if (response.data.accessToken) {
         localStorage.setItem("user", JSON.stringify(response.data))
-      } 
-      console.log("this is your accessToken:",response.data.accessToken);
+      }
+      console.log("this is your accessToken:", response.data.accessToken);
       return response.data;
     }).then((response) => {
-      setRedirect(true);
-    })
-    // setRedirect(false);
-  }
 
-  if (redirect) {
-    return <Redirect to="userInfo" />
+    })
   }
 
   return (
@@ -49,10 +42,10 @@ const Login = () => {
           />
         </label>
 
-        <div  className="button-container">
+        <div className="button-container">
           <button onClick={login}>
             Login
-            </button>
+          </button>
         </div>
 
       </div>

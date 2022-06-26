@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
 import '../Styles/Register.css';
 import { baseURL } from "../Service/BaseURLService"
@@ -22,7 +22,6 @@ const Registration = () => {
       console.log("mismatched passwords")
     }
 
-    //clear user input after submission:
     const clearState = () => {
       setName("");
       setEmail("");
@@ -46,10 +45,10 @@ const Registration = () => {
             }}
           />
         </label>
-
+        
         <label>
           <p>Email</p>
-          <input type="text"
+          <input type="email"
             value={email}
             placeholder="Email"
             onChange={(event) => {
@@ -64,7 +63,7 @@ const Registration = () => {
             value={password}
             placeholder="Password"
             onChange={(event) => {
-              setPassword(event.target.value);
+              setPassword(...password,event.targets.value);
             }}
           />
         </label>
@@ -85,7 +84,6 @@ const Registration = () => {
             Submit
           </button>
         </div>
-
       </div>
     </div>
   )
